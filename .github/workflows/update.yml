@@ -1,101 +1,49 @@
-# name: Update LeetCode Score
-
-# on:
-#   schedule:
-#     # Runs every 5 minutes (*/5 * * * *)
-#     # Uncomment the following line if you want to execute it daily at 00:00 UTC:
-#     # - cron: "0 0 * * *"  # execute 00:00 UTC everyday
-#     - cron: "*/5 * * * *"  # execute every 5 minutes
-#   workflow_dispatch: # Allows you to manually trigger this workflow
-
-# permissions:
-#   contents: write # Ensures the workflow has write access to the repository
-
-# jobs:
-#   update-readme:
-#     runs-on: ubuntu-latest  # Specifies that the workflow runs on the latest Ubuntu environment
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v4  # Fetches the repository to the GitHub Actions runner
-
-#       - name: Setup Python
-#         uses: actions/setup-python@v4  # Installs and sets up Python on the runner
-#         with:
-#           python-version: '3.x'  # Specifies the Python version to use
-
-#       - name: Install dependencies
-#         run: pip install requests pyyaml  # Installs the required Python libraries (requests and pyyaml)
-
-#       - name: Run script
-#         run: python update_score.py  # Executes the Python script to update the LeetCode score
-
-#       # - name: Commit changes
-#       #   run: |
-#       #     git config --global user.name "github-actions[bot]"  # Sets the commit author name
-#       #     git config --global user.email "github-actions@users.noreply.github.com"  # Sets the commit author email
-#       #     git add README.md  # Stages changes made to the README.md file
-#       #     git commit -m "Auto update LeetCode score" || exit 0  # Commits the changes, but exits gracefully if there are no changes
-#       #     git push  # Pushes the changes back to the repository
-
-#       - name: Commit changes
-#         env:
-#           GH_PAT: ${{ secrets.GH_PAT }}
-#         run: |
-#           git config --global user.name "github-actions[bot]"
-#           git config --global user.email "github-actions@users.noreply.github.com"
-#           git add README.md badge.svg
-#           git commit -m "Auto update LeetCode score" || exit 0
-#           git push https://x-access-token:${GH_PAT}@github.com/kaiicheng/kaiicheng.git main
-
 name: Update LeetCode Score
 
 on:
   schedule:
     # Runs every 5 minutes (*/5 * * * *)
     # Uncomment the following line if you want to execute it daily at 00:00 UTC:
-    # - cron: "0 0 * * *"  # Execute daily at 00:00 UTC
-    - cron: "*/5 * * * *"  # Execute every 5 minutes
-  workflow_dispatch: # Allows manual triggering of this workflow
-
-permissions:
-  contents: write # Ensures the workflow has write access to the repository
+    # - cron: "0 0 * * *"  # execute 00:00 UTC everyday
+    - cron: "*/5 * * * *"  # execute every 5 minutes
+  workflow_dispatch: # Allows you to manually trigger this workflow
 
 jobs:
   update-readme:
-    runs-on: ubuntu-latest # Use the latest Ubuntu environment
+    runs-on: ubuntu-latest  # Specifies that the workflow runs on the latest Ubuntu environment
+
+    permissions:
+      contents: write # Ensures the workflow has write access to the repository
 
     steps:
-    # Step 1: Check out the repository
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Fetches the repository to the GitHub Actions runner
 
-    # Step 2: Set up Python environment
-    - name: Set up Python 3.x
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
-        architecture: 'x64'
-        cache: 'pip'
+      - name: Setup Python
+        uses: actions/setup-python@v4  # Installs and sets up Python on the runner
+        with:
+          python-version: '3.x'  # Specifies the Python version to use
 
-    # Step 3: Install required dependencies
-    - name: Install dependencies
-      run: |
-        python3 -m pip install --upgrade pip setuptools wheel
-        python3 -m pip install requests pyyaml
+      - name: Install dependencies
+        run: pip install requests pyyaml  # Installs the required Python libraries (requests and pyyaml)
 
-    # Step 4: Run the script to update the LeetCode score
-    - name: Update LeetCode score
-      run: |
-        python3 update_score.py
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_PAT: ${{ secrets.GH_PAT }}
+      - name: Run script
+        run: python update_score.py  # Executes the Python script to update the LeetCode score
 
-    # Step 5: Commit and push changes to the repository
-    - name: Commit changes
-      run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git add README.md badge.svg
-        git commit -m "Auto update LeetCode score" || true # Prevent failure if no changes
-        git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/kaiicheng/kaiicheng.git main
+      # - name: Commit changes
+      #   run: |
+      #     git config --global user.name "github-actions[bot]"  # Sets the commit author name
+      #     git config --global user.email "github-actions@users.noreply.github.com"  # Sets the commit author email
+      #     git add README.md  # Stages changes made to the README.md file
+      #     git commit -m "Auto update LeetCode score" || exit 0  # Commits the changes, but exits gracefully if there are no changes
+      #     git push  # Pushes the changes back to the repository
+
+      - name: Commit changes
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions@users.noreply.github.com"
+          git add README.md badge.svg
+          git commit -m "Auto update LeetCode score" || exit 0
+          git push https://x-access-token:${GH_PAT}@github.com/kaiicheng/kaiicheng.git main
