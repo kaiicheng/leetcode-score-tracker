@@ -34,12 +34,12 @@ jobs:
       #     git commit -m "Auto update LeetCode score" || exit 0  # Commits the changes, but exits gracefully if there are no changes
       #     git push  # Pushes the changes back to the repository
 
-- name: Commit changes
-  env:
-    GH_PAT: ${{ secrets.GH_PAT }}
-  run: |
-    git config --global user.name "github-actions[bot]"
-    git config --global user.email "github-actions@users.noreply.github.com"
-    git add README.md badge.svg
-    git commit -m "Auto update LeetCode score" || exit 0
-    git push https://x-access-token:${GH_PAT}@github.com/kaiicheng/kaiicheng.git main
+      - name: Commit changes
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions@users.noreply.github.com"
+          git add README.md badge.svg
+          git commit -m "Auto update LeetCode score" || exit 0
+          git push https://x-access-token:${GH_PAT}@github.com/kaiicheng/kaiicheng.git main
