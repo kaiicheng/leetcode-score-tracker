@@ -1,11 +1,11 @@
 name: Update LeetCode Score
 
 on:
-  schedule:
+  # schedule:
     # Runs every 5 minutes (*/5 * * * *)
     # Uncomment the following line if you want to execute it daily at 00:00 UTC:
     # - cron: "0 0 * * *"  # execute 00:00 UTC everyday
-    - cron: "*/5 * * * *"  # execute every 5 minutes
+    # - cron: "*/5 * * * *"  # execute every 5 minutes
   workflow_dispatch: # Allows you to manually trigger this workflow
 
 jobs:
@@ -26,10 +26,20 @@ jobs:
       - name: Run script
         run: python update_score.py  # Executes the Python script to update the LeetCode score
 
+      # - name: Commit changes
+      #   run: |
+      #     git config --global user.name "github-actions[bot]"  # Sets the commit author name
+      #     git config --global user.email "github-actions@users.noreply.github.com"  # Sets the commit author email
+      #     git add README.md  # Stages changes made to the README.md file
+      #     git commit -m "Auto update LeetCode score" || exit 0  # Commits the changes, but exits gracefully if there are no changes
+      #     git push  # Pushes the changes back to the repository
+
       - name: Commit changes
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          git config --global user.name "github-actions[bot]"  # Sets the commit author name
-          git config --global user.email "github-actions@users.noreply.github.com"  # Sets the commit author email
-          git add README.md  # Stages changes made to the README.md file
-          git commit -m "Auto update LeetCode score" || exit 0  # Commits the changes, but exits gracefully if there are no changes
-          git push  # Pushes the changes back to the repository
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions@users.noreply.github.com"
+          git add README.md
+          git commit -m "Auto update LeetCode score" || exit 0
+          git push https://x-access-token:${GH_PAT}@github.com/kaiicheng/kaiicheng.git main
