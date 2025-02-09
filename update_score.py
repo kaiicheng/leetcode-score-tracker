@@ -2,6 +2,7 @@ import re
 import requests
 
 GITHUB_README_PATH = "README.md"
+BADGE_PATH = "badge.svg"
 LEETCODE_USERNAME = "kaiicheng"
 BADGE_TEMPLATE = r"!\[LeetCode\]\(https:\/\/img\.shields\.io\/badge\/LeetCode-\d+(,\d+)?-orange\?style=flat&logo=leetcode&logoColor=white\)"
 
@@ -94,6 +95,20 @@ def update_readme(rating):
     except Exception as e:
         print(f"[ERROR] An exception occurred while updating README.md: {e}")
 
+def generate_svg(score):
+    """
+    generate `badge.svg` for `kaiicheng/kaiicheng`
+    """
+    svg_content = f"""
+    <svg xmlns="http://www.w3.org/2000/svg" width="150" height="30">
+        <rect width="150" height="30" fill="#f47920"/>
+        <text x="10" y="20" font-size="18" fill="white">LeetCode: {score}</text>
+    </svg>
+    """
+    with open(BADGE_PATH, "w", encoding="utf-8") as file:
+        file.write(svg_content.strip())
+    print("[INFO] badge.svg generated successfully.")
+
 def main():
     """
     Main function to fetch the LeetCode contest rating and update the README file.
@@ -106,6 +121,7 @@ def main():
         print(f"[INFO] Successfully fetched contest rating: {rating}")
         # Update the README if the contest rating is successfully fetched
         update_readme(rating)
+        generate_svg(rating)
         print(f"[INFO] Updated LeetCode contest rating to {rating}")
     else:
         print("[ERROR] Failed to fetch LeetCode contest rating.")
