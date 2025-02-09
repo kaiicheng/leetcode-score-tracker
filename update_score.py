@@ -99,15 +99,29 @@ def generate_svg(score):
     """
     generate `badge.svg` for `kaiicheng/kaiicheng`
     """
-    svg_content = f"""
-    <svg xmlns="http://www.w3.org/2000/svg" width="150" height="30">
-        <rect width="150" height="30" fill="#f47920"/>
-        <text x="10" y="20" font-size="18" fill="white">LeetCode: {score}</text>
-    </svg>
-    """
-    with open(BADGE_PATH, "w", encoding="utf-8") as file:
-        file.write(svg_content.strip())
-    print("[INFO] badge.svg generated successfully.")
+
+    # customizable badge
+    # svg_content = f"""
+    # <svg xmlns="http://www.w3.org/2000/svg" width="150" height="30">
+    #     <rect width="150" height="30" fill="#f47920" rx="5" ry="5"/>
+    #     <text x="10" y="20" font-size="18" fill="white" font-family="Arial, sans-serif" alignment-baseline="middle">LeetCode: {score}</text>
+    # </svg>
+    # """
+
+    shields_url = f"https://img.shields.io/badge/LeetCode-{score}-orange?style=flat&logo=leetcode&logoColor=white"
+
+    try:
+        # sebd request to get svg
+        response = requests.get(shields_url)
+        response.raise_for_status()
+
+        # save SVG
+        with open(BADGE_PATH, "wb") as file:
+            file.write(response.content)
+        print(f"[INFO] badge.svg generated successfully from {shields_url}")
+    
+    except requests.exceptions.RequestException as e:
+        print(f"[ERROR] Failed to fetch badge from shields.io: {e}")
 
 def main():
     """

@@ -1,11 +1,11 @@
 name: Update LeetCode Score
 
 on:
-  # schedule:
+  schedule:
     # Runs every 5 minutes (*/5 * * * *)
     # Uncomment the following line if you want to execute it daily at 00:00 UTC:
     # - cron: "0 0 * * *"  # execute 00:00 UTC everyday
-    # - cron: "*/5 * * * *"  # execute every 5 minutes
+    - cron: "*/5 * * * *"  # execute every 5 minutes
   workflow_dispatch: # Allows you to manually trigger this workflow
 
 jobs:
