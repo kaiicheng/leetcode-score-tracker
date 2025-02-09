@@ -22,7 +22,7 @@ jobs:
         run: pip install requests pyyaml
 
       - name: Run script
-        run: python update_readme.py
+        run: python update_score.py
 
       - name: Commit changes
         run: |
