@@ -11,23 +11,22 @@ on:
 jobs:
   update-readme:
     runs-on: ubuntu-latest  # Specifies that the workflow runs on the latest Ubuntu environment
-    
-    # Checkout code
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4  # Fetches the repository to the GitHub Actions runner
 
-    # Setup environment
+
       - name: Setup Python
         uses: actions/setup-python@v4  # Installs and sets up Python on the runner
         with:
           python-version: '3.x'  # Specifies the Python version to use
 
-    # Install dependencies
+
       - name: Install dependencies
         run: pip install requests pyyaml  # Installs the required Python libraries (requests and pyyaml)
 
-    # Update README.md
+
       - name: Run script
         run: python update_score.py  # Executes the Python script to update the LeetCode score
 
