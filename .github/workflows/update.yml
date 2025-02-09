@@ -11,40 +11,25 @@ on:
 jobs:
   update-readme:
     runs-on: ubuntu-latest  # Specifies that the workflow runs on the latest Ubuntu environment
-    
-    # Checkout code
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4  # Fetches the repository to the GitHub Actions runner
 
-    # Setup environment
       - name: Setup Python
         uses: actions/setup-python@v4  # Installs and sets up Python on the runner
         with:
           python-version: '3.x'  # Specifies the Python version to use
 
-    # Install dependencies
       - name: Install dependencies
         run: pip install requests pyyaml  # Installs the required Python libraries (requests and pyyaml)
 
-    # Update README.md
       - name: Run script
         run: python update_score.py  # Executes the Python script to update the LeetCode score
 
-      # - name: Commit changes
-      #   run: |
-      #     git config --global user.name "github-actions[bot]"  # Sets the commit author name
-      #     git config --global user.email "github-actions@users.noreply.github.com"  # Sets the commit author email
-      #     git add README.md  # Stages changes made to the README.md file
-      #     git commit -m "Auto update LeetCode score" || exit 0  # Commits the changes, but exits gracefully if there are no changes
-      #     git push  # Pushes the changes back to the repository
-
       - name: Commit changes
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions@users.noreply.github.com"
-          git add README.md
-          git commit -m "Auto update LeetCode score" || exit 0
-          git push https://x-access-token:${GH_PAT}@github.com/kaiicheng/kaiicheng.git main
+          git config --global user.name "github-actions[bot]"  # Sets the commit author name
+          git config --global user.email "github-actions@users.noreply.github.com"  # Sets the commit author email
+          git add README.md  # Stages changes made to the README.md file
+          git commit -m "Auto update LeetCode score" || exit 0  # Commits the changes, but exits gracefully if there are no changes
+          git push  # Pushes the changes back to the repository
