@@ -1,5 +1,8 @@
 name: Update LeetCode Score
 
+permissions:
+  contents: write
+
 on:
   schedule:
     # Runs every 5 minutes (*/5 * * * *)
