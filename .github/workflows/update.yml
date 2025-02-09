@@ -1,28 +1,33 @@
 name: Update LeetCode Score
 
 on:
-  # schedule:
+  schedule:
     # Runs every 5 minutes (*/5 * * * *)
     # Uncomment the following line if you want to execute it daily at 00:00 UTC:
     # - cron: "0 0 * * *"  # execute 00:00 UTC everyday
-    # - cron: "*/5 * * * *"  # execute every 5 minutes
+    - cron: "*/5 * * * *"  # execute every 5 minutes
   workflow_dispatch: # Allows you to manually trigger this workflow
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest  # Specifies that the workflow runs on the latest Ubuntu environment
+    
+    # Checkout code
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4  # Fetches the repository to the GitHub Actions runner
 
+    # Setup environment
       - name: Setup Python
         uses: actions/setup-python@v4  # Installs and sets up Python on the runner
         with:
           python-version: '3.x'  # Specifies the Python version to use
 
+    # Install dependencies
       - name: Install dependencies
         run: pip install requests pyyaml  # Installs the required Python libraries (requests and pyyaml)
 
+    # Update README.md
       - name: Run script
         run: python update_score.py  # Executes the Python script to update the LeetCode score
 
